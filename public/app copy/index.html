@@ -98,7 +98,6 @@
       <section id="view-breathe-active" class="view">
 
         <div class="breathing-container">
-      
           <div class="breathing-ring outer"></div>
           <div class="breathing-ring middle"></div>
       
@@ -106,12 +105,19 @@
             <span id="breath-phase">Готов?</span>
             <span id="breath-counter" class="breath-counter"></span>
           </div>
-      
         </div>
       
         <p class="breath-instruction" id="breath-instruction">
           Нажми «Начать» внизу
         </p>
+      
+        <!-- 👇 ЭМОЦИИ СЮДА (после текста, перед кнопками) -->
+        <div id="emotion-bar" class="emotion-bar">
+          <button data-emotion="panic">😰</button>
+          <button data-emotion="anxious">😟</button>
+          <button data-emotion="neutral">😐</button>
+          <button data-emotion="calm">🙂</button>
+        </div>
       
         <div class="breath-controls">
           <button id="breath-sound" class="icon-btn">🔊</button>
@@ -122,6 +128,7 @@
         </div>
       
       </section>
+    
       <!-- Grounding -->
       <section id="view-grounding" class="view">
         <div class="grounding-steps" id="grounding-steps">

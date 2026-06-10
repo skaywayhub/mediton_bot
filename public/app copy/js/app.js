@@ -5,31 +5,14 @@
 
   const $ = (sel) => document.querySelector(sel);
   const $$ = (sel) => document.querySelectorAll(sel);
-
-  function safe(fn) {
-    try {
-      return fn?.();
-    } catch (e) {
-      console.error("Safe error:", e);
-    }
-  }
-
-  function el(id) {
-    return document.getElementById(id);
-  }
-  
-
-
-
+  const el = (id) => document.getElementById(id);
 
   /* ===================== INIT ===================== */
 
-  safe(() => {
-    if (tg) {
-      tg.ready();
-      tg.expand();
-    }
-  });
+  if (tg) {
+    tg.ready();
+    tg.expand();
+  }
 
   /* ===================== STATE ===================== */
 
@@ -72,37 +55,28 @@
     cycle: 0,
     phase: 0
   };
+
   let breathSession = {
     startedAt: 0,
     cycles: 0
   };
-  
-  function vibrate(type) {
-    if (!navigator.vibrate) return;
-  
-    if (type === "inhale") navigator.vibrate(30);
-    if (type === "exhale") navigator.vibrate(20);
-    if (type === "end") navigator.vibrate([80, 50, 80]);
-  }
-  
-  function saveBreathingSession() {
-    const sessions = JSON.parse(
-      localStorage.getItem("breath_sessions") || "[]"
-    );
-  
-    sessions.push({
-      date: new Date().toISOString(),
-      cycles: breath.cycle,
-      duration:
-        Math.round((Date.now() - breathSession.startedAt) / 1000)
-    });
-  
-    localStorage.setItem(
-      "breath_sessions",
-      JSON.stringify(sessions.slice(-50))
-    );
-  }
-  /* ===================== SAFE UI ===================== */
+
+  /* ===================== BREATHING AI (2.0) ===================== */
+
+  let breathAI = {
+    level: 1,
+    calmIndex: 0,
+    lastEmotion: "neutral"
+  };
+
+  const EMOTION_STYLE = {
+    panic: { color: "#ff4d4d", hint: "Ты в безопасности. Замедли дыхание." },
+    anxious: { color: "#ff9f43", hint: "Плечи расслаблены. Ты справляешься." },
+    neutral: { color: "#4a90e2", hint: "Наблюдай за дыханием." },
+    calm: { color: "#2ecc71", hint: "Отлично. Удерживай ритм." }
+  };
+
+  /* ===================== UI HELPERS ===================== */
 
   function setText(id, value) {
     const node = el(id);
@@ -114,7 +88,16 @@
     if (node) node.className = className;
   }
 
-  /* ===================== NAVIGATION ===================== */
+  function animateBreath(type) {
+    const circle = el("breathing-circle");
+    if (!circle) return;
+
+    if (type === "inhale") circle.style.transform = "scale(1.25)";
+    if (type === "exhale") circle.style.transform = "scale(0.85)";
+    if (type === "hold") circle.style.transform = "scale(1)";
+  }
+
+  /* ===================== NAV ===================== */
 
   function showView(view) {
     $$(".view").forEach(v => v.classList.remove("active"));
@@ -124,24 +107,50 @@
 
   /* ===================== BREATHING ===================== */
 
+  function openBreathing(key) {
+    const pattern = BREATH_PATTERNS[key];
+    if (!pattern) return;
+
+    breath.pattern = pattern;
+    breath.running = false;
+    breath.cycle = 0;
+    breath.phase = 0;
+
+    setText(
+      "breath-instruction",
+      `🧪 Уровень ${breathAI.level} — Исследовательское дыхание`
+    );
+
+    setText("breath-phase", "Готов?");
+    setText("breath-counter", "");
+
+    showView("breathe-active");
+  }
+
   function startBreathing() {
     if (!breath.pattern) return;
-    breathSession.startedAt = Date.now();
-    breathSession.cycles = 0;
+
     breath.running = true;
     breath.cycle = 0;
     breath.phase = 0;
+
+    breathSession.startedAt = Date.now();
 
     runCycle();
   }
 
   function stopBreathing() {
     breath.running = false;
-    saveBreathingSession();
-    vibrate("end");
+
     if (breath.timer) {
       clearTimeout(breath.timer);
       breath.timer = null;
+    }
+
+    breathAI.calmIndex++;
+
+    if (breathAI.calmIndex % 3 === 0) {
+      breathAI.level = Math.min(5, breathAI.level + 1);
     }
 
     setText("breath-phase", "Готово");
@@ -166,12 +175,27 @@
 
     setClass("breathing-circle", `breathing-circle ${phase.type}`);
 
+    animateBreath(phase.type);
+
     let t = phase.duration;
+
+    const hints = [
+      "Расслабь челюсть",
+      "Опусти плечи",
+      "Ты в безопасности",
+      "Дыши медленно",
+      "Наблюдай за дыханием"
+    ];
 
     function tick() {
       if (!breath.running) return;
 
       setText("breath-counter", t);
+
+      if (t === phase.duration - 1) {
+        const hint = hints[Math.floor(Math.random() * hints.length)];
+        setText("breath-instruction", hint);
+      }
 
       if (t <= 0) {
         breath.phase++;
@@ -192,20 +216,23 @@
     tick();
   }
 
-  function openBreathing(key) {
-    const pattern = BREATH_PATTERNS[key];
-    if (!pattern) return;
+  /* ===================== EMOTIONS ===================== */
 
-    breath.pattern = pattern;
-    breath.running = false;
-    breath.phase = 0;
-    breath.cycle = 0;
+  function initEmotions() {
+    $$(".emotion-bar button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const emo = btn.dataset.emotion;
+        const style = EMOTION_STYLE[emo];
 
-    setText("breath-phase", "Готов?");
-    setText("breath-counter", "");
-    setText("breath-instruction", pattern.name);
+        if (!style) return;
 
-    showView("breathe-active");
+        breathAI.lastEmotion = emo;
+
+        document.documentElement.style.setProperty("--breath-color", style.color);
+
+        setText("breath-instruction", style.hint);
+      });
+    });
   }
 
   /* ===================== EVENTS ===================== */
@@ -221,9 +248,7 @@
       });
     }
 
-    if (stopBtn) {
-      stopBtn.addEventListener("click", stopBreathing);
-    }
+    if (stopBtn) stopBtn.addEventListener("click", stopBreathing);
 
     $$(".technique-card").forEach(card => {
       card.addEventListener("click", () => {
@@ -231,7 +256,9 @@
       });
     });
 
-    console.log("CalmMind app initialized");
+    initEmotions();
+
+    console.log("Breathing 2.0 initialized");
   }
 
   if (document.readyState === "loading") {

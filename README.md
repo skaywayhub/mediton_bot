@@ -78,7 +78,7 @@ npm start
 ### 6. Настройте Mini App в BotFather
 
 1. `/mybots` → ваш бот → **Bot Settings** → **Menu Button**
-2. Укажите URL: `https://your-domain.com/app/`
+2. Укажите URL: `https://your-domain.com/app`
 
 Или через API (выполняется автоматически при старте):
 - Menu Button → Web App → `Приложение CalmMind`
