@@ -55,3 +55,4 @@ export async function startServer() {
     console.log(`CalmMind running`);
     console.log(`Mini App: ${config.webappUrl}`);
   });
+  }
