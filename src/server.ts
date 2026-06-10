@@ -32,7 +32,7 @@ export async function startServer() {
 
   await setupBotMenu(bot);
 
-  const webhookUrl = `${config.webappUrl}${config.webhookPath}`;
+  const webhookUrl = `https://meditonbot-production.up.railway.app${config.webhookPath}`;
   await bot.api.setWebhook(webhookUrl, {
     allowed_updates: [
       "message",
@@ -43,8 +43,8 @@ export async function startServer() {
 
   console.log(`Webhook set: ${webhookUrl}`);
 
-  app.listen(config.port, () => {
+  app.listen(config.port, "0.0.0.0", () => {
     console.log(`CalmMind running on port ${config.port}`);
-    console.log(`Mini App: ${config.webappUrl}/app/`);
+    console.log(`Mini App: ${config.webappUrl}`);
   });
 }

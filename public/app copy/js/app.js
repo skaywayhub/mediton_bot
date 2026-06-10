@@ -128,17 +128,21 @@
   }
 
   function startBreathing() {
+    console.log("START CLICKED", breath.pattern);
+  
+  
+    console.log("PATTERN BEFORE START:", breath.pattern);
+  
     if (!breath.pattern) return;
-
+  
     breath.running = true;
     breath.cycle = 0;
     breath.phase = 0;
-
+  
     breathSession.startedAt = Date.now();
-
+  
     runCycle();
   }
-
   function stopBreathing() {
     breath.running = false;
 
