@@ -1,5 +1,5 @@
 {
-  "name": "calmmind",
+  "name": "Mediton",
   "version": "1.0.0",
   "description": "CalmMind — Telegram bot + mini-app for anxiety relief",
   "main": "dist/index.js",

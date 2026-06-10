@@ -11,9 +11,10 @@ function requireEnv(name: string): string {
 }
 
 export const config = {
-  botToken: requireEnv("BOT_TOKEN"),
-  webappUrl: requireEnv("WEBAPP_URL").replace(/\/$/, ""),
-  webhookPath: process.env.WEBHOOK_PATH || "/webhook",
-  port: parseInt(process.env.PORT || "3000", 10),
-  premiumPriceStars: parseInt(process.env.PREMIUM_PRICE_STARS || "49", 10),
-};
+  export const config = {
+    botToken: requireEnv("8614107132:AAFrbLpI--diCZvmMY9NvlmRZMEjEko2wxk"),
+    webappUrl: "https://mediton-miniapp-2.vercel.app",
+    webhookPath: process.env.WEBHOOK_PATH || "/webhook",
+    port: parseInt(process.env.PORT || "3000", 10),
+    premiumPriceStars: parseInt(process.env.PREMIUM_PRICE_STARS || "49", 10),
+  };

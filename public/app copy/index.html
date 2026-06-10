@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CalmMind</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <button id="back-btn" class="back-btn hidden" aria-label="Назад">←</button>
+      <div class="header-content">
+        <div class="logo">🌊</div>
+        <h1 id="page-title">CalmMind</h1>
+        <p id="page-subtitle">Твой помощник при тревоге</p>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- Home -->
+      <section id="view-home" class="view active">
+        <div class="sos-banner" id="sos-banner">
+          <span>🆘</span>
+          <div>
+            <strong>Нужна помощь сейчас?</strong>
+            <p>Быстрые техники за 60 секунд</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <button class="nav-card" data-nav="breathe">
+            <span class="nav-icon">🌬</span>
+            <span class="nav-label">Дыхание</span>
+          </button>
+          <button class="nav-card" data-nav="journal">
+            <span class="nav-icon">📔</span>
+            <span class="nav-label">Дневник</span>
+          </button>
+          <button class="nav-card" data-nav="techniques">
+            <span class="nav-icon">🧠</span>
+            <span class="nav-label">Техники КПТ</span>
+          </button>
+          <button class="nav-card" data-nav="stats">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Статистика</span>
+          </button>
+        </div>
+
+        <div class="quick-mood">
+          <p>Как настроение?</p>
+          <div class="mood-buttons" id="quick-mood">
+            <button data-score="1">😰</button>
+            <button data-score="2">😟</button>
+            <button data-score="3">😐</button>
+            <button data-score="4">🙂</button>
+            <button data-score="5">😊</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Breathing list -->
+      <section id="view-breathe" class="view">
+        <div class="technique-list">
+          <button class="technique-card" data-breathe="478">
+            <div class="technique-info">
+              <h3>4-7-8 (SOS)</h3>
+              <p>Вдох 4 · Задержка 7 · Выдох 8</p>
+            </div>
+            <span class="badge free">Бесплатно</span>
+          </button>
+          <button class="technique-card" data-breathe="box">
+            <div class="technique-info">
+              <h3>Коробочное дыхание</h3>
+              <p>4-4-4-4 · Баланс и фокус</p>
+            </div>
+            <span class="badge free">Бесплатно</span>
+          </button>
+          <button class="technique-card" data-breathe="calm">
+            <div class="technique-info">
+              <h3>Спокойное дыхание</h3>
+              <p>5-5 · Мягкое успокоение</p>
+            </div>
+            <span class="badge free">Бесплатно</span>
+          </button>
+          <button class="technique-card premium-locked" data-breathe="coherent">
+            <div class="technique-info">
+              <h3>Когерентное дыхание</h3>
+              <p>5-5 · 6 циклов/мин</p>
+            </div>
+            <span class="badge premium">⭐ Premium</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Breathing exercise -->
+      <section id="view-breathe-active" class="view">
+        <div class="breathing-container">
+          <div class="breathing-ring outer"></div>
+          <div class="breathing-ring middle"></div>
+          <div class="breathing-circle" id="breathing-circle">
+            <span id="breath-phase">Готов?</span>
+            <span id="breath-counter" class="breath-counter"></span>
+          </div>
+        </div>
+        <p class="breath-instruction" id="breath-instruction">Нажми «Начать» внизу</p>
+        <div class="breath-controls">
+          <button id="breath-sound" class="icon-btn" title="Звук природы">🔊</button>
+          <button id="breath-vibrate" class="icon-btn active" title="Вибрация">📳</button>
+        </div>
+      </section>
+
+      <!-- Grounding -->
+      <section id="view-grounding" class="view">
+        <div class="grounding-steps" id="grounding-steps">
+          <div class="grounding-step active" data-step="0">
+            <span class="step-num">5</span>
+            <h3>Назови 5 вещей, которые видишь</h3>
+            <p>Оглянись вокруг. Назови вслух или про себя.</p>
+          </div>
+          <div class="grounding-step" data-step="1">
+            <span class="step-num">4</span>
+            <h3>4 вещи, которые можешь потрогать</h3>
+            <p>Ощути текстуру — ткань, стол, пол.</p>
+          </div>
+          <div class="grounding-step" data-step="2">
+            <span class="step-num">3</span>
+            <h3>3 звука вокруг тебя</h3>
+            <p>Прислушайся — даже тихие звуки считаются.</p>
+          </div>
+          <div class="grounding-step" data-step="3">
+            <span class="step-num">2</span>
+            <h3>2 запаха</h3>
+            <p>Или 2 вещи, которые нравятся тебе на запах.</p>
+          </div>
+          <div class="grounding-step" data-step="4">
+            <span class="step-num">1</span>
+            <h3>1 вещь, за которую благодарен</h3>
+            <p>Даже маленькая — это важно.</p>
+          </div>
+        </div>
+        <div class="grounding-dots" id="grounding-dots"></div>
+      </section>
+
+      <!-- Journal -->
+      <section id="view-journal" class="view">
+        <div class="journal-form">
+          <label>Уровень тревоги</label>
+          <div class="mood-slider-wrap">
+            <input type="range" id="journal-mood" min="1" max="5" value="3">
+            <span id="journal-mood-label">😐 3</span>
+          </div>
+          <label>Что на уме?</label>
+          <textarea id="journal-thought" placeholder="Выпиши навязчивые мысли — это снижает их силу..." rows="4"></textarea>
+          <label>Что помогло?</label>
+          <input type="text" id="journal-helped" placeholder="Дыхание, прогулка, разговор...">
+        </div>
+        <div class="journal-entries" id="journal-entries"></div>
+      </section>
+
+      <!-- CBT Techniques -->
+      <section id="view-techniques" class="view">
+        <div class="technique-list">
+          <div class="cbt-card">
+            <h3>🔄 Проверка мысли</h3>
+            <p>«Это факт или моё предположение? Какие есть доказательства за и против?»</p>
+          </div>
+          <div class="cbt-card">
+            <h3>📏 Декатастрофизация</h3>
+            <p>«Что самое худшее может случиться? Насколько это вероятно? Что я сделаю, если это произойдёт?»</p>
+          </div>
+          <div class="cbt-card">
+            <h3>⏳ Отложенное беспокойство</h3>
+            <p>Запиши тревожную мысль. Вернись к ней в назначенное время (15 мин вечером).</p>
+          </div>
+          <div class="cbt-card premium-locked">
+            <h3>⭐ Расширенная библиотека</h3>
+            <p>20+ техник КПТ доступны в Premium</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section id="view-stats" class="view">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-value" id="stat-avg">—</span>
+            <span class="stat-label">Среднее настроение</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-sessions">0</span>
+            <span class="stat-label">Сессий дыхания</span>
+          </div>
+        </div>
+        <div class="mood-chart" id="mood-chart">
+          <p class="chart-empty">Записывай настроение, чтобы увидеть тренд</p>
+        </div>
+        <div class="recommendation-card" id="recommendation-card">
+          <p id="recommendation-text">Загрузка...</p>
+        </div>
+      </section>
+
+      <!-- Premium -->
+      <section id="view-premium" class="view">
+        <div class="premium-hero">
+          <span>⭐</span>
+          <h2>CalmMind Premium</h2>
+          <p>Расширенные техники и аналитика</p>
+        </div>
+        <ul class="premium-features">
+          <li>20+ техник КПТ и дыхания</li>
+          <li>Подробная аналитика настроения</li>
+          <li>Экспорт данных</li>
+          <li>Персональные рекомендации</li>
+        </ul>
+        <p class="premium-note">Оформи подписку через бота — кнопка «Премиум» в /progress</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
