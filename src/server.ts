@@ -48,11 +48,11 @@ export async function startServer() {
   
   console.log(`Webhook set: ${webhookUrl}`);
   
-  const PORT = process.env.PORT || 3000;
-  
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server running on ${PORT}`);
-    console.log(`CalmMind running`);
-    console.log(`Mini App: ${config.webappUrl}`);
-  });
-  }
+  const PORT = parseInt(process.env.PORT || "3000", 10);
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Server running on ${PORT}`);
+  console.log(`CalmMind running`);
+  console.log(`Mini App: ${config.webappUrl}`);
+});
+}
