@@ -108,39 +108,50 @@ console.log("🔥 APP LOADED");
 
   /* ===================== BREATHING ===================== */
 
+  
   function openBreathing(key) {
+    console.log("OPEN BREATHING:", key);
+  
     const pattern = BREATH_PATTERNS[key];
+    console.log("PATTERN FOUND:", pattern);
+  
     if (!pattern) return;
-
+  
     breath.pattern = pattern;
+  
+    console.log("BREATH SET:", breath.pattern);
+  
     breath.running = false;
     breath.cycle = 0;
     breath.phase = 0;
-
+  
     setText(
       "breath-instruction",
       `🧪 Уровень ${breathAI.level} — Исследовательское дыхание`
     );
-
+  
     setText("breath-phase", "Готов?");
     setText("breath-counter", "");
-
+  
     showView("breathe-active");
   }
 
   function startBreathing() {
-    console.log("START CLICKED", breath.pattern);
+    console.log("START CLICKED");
+    console.log("CURRENT PATTERN:", breath.pattern);
   
-  
-    console.log("PATTERN BEFORE START:", breath.pattern);
-  
-    if (!breath.pattern) return;
+    if (!breath.pattern) {
+      console.warn("NO PATTERN → STOP");
+      return;
+    }
   
     breath.running = true;
     breath.cycle = 0;
     breath.phase = 0;
   
     breathSession.startedAt = Date.now();
+  
+    console.log("RUN CYCLE NOW");
   
     runCycle();
   }
@@ -164,26 +175,27 @@ console.log("🔥 APP LOADED");
   }
 
   function runCycle() {
-    console.log("RUN CYCLE");
-    if (!breath.running || !breath.pattern) return;
-
-    const pattern = breath.pattern;
-
-    if (breath.cycle >= pattern.cycles) {
-      stopBreathing();
+    console.log("RUN CYCLE", {
+      running: breath.running,
+      pattern: breath.pattern,
+      cycle: breath.cycle,
+      phase: breath.phase
+    });
+  
+    if (!breath.running || !breath.pattern) {
+      console.warn("NOT RUNNING OR NO PATTERN");
       return;
     }
 
+    const pattern = breath.pattern;
     const phase = pattern.phases[breath.phase];
     console.log("PHASE =", phase);
-
+    
     if (!phase) {
       console.error("PHASE NOT FOUND");
       stopBreathing();
       return;
     }
-  
-    
 
     setText("breath-phase", phase.label);
     setText("breath-counter", phase.duration);
@@ -220,16 +232,64 @@ console.log("🔥 APP LOADED");
           breath.cycle++;
         }
 
-        runCycle();
-        return;
-      }
-
-      t--;
-      breath.timer = setTimeout(tick, 1000);
-    }
-
-    tick();
-  }
+        function runCycle() {
+          console.log("RUN CYCLE", {
+            running: breath.running,
+            pattern: breath.pattern,
+            cycle: breath.cycle,
+            phase: breath.phase
+          });
+        
+          if (!breath.running || !breath.pattern) {
+            console.warn("NOT RUNNING OR NO PATTERN");
+            return;
+          }
+        
+          const pattern = breath.pattern;
+          const phase = pattern.phases[breath.phase];
+        
+          console.log("PHASE =", phase);
+        
+          if (!phase) {
+            console.error("PHASE NOT FOUND");
+            stopBreathing();
+            return;
+          }
+        
+          setText("breath-phase", phase.label);
+          setText("breath-counter", phase.duration);
+        
+          setClass("breathing-circle", `breathing-circle ${phase.type}`);
+        
+          animateBreath(phase.type);
+        
+          let t = phase.duration;
+        
+          console.log("TIMER START:", t);
+        
+          function tick() {
+            if (!breath.running) return;
+        
+            setText("breath-counter", t);
+        
+            if (t <= 0) {
+              breath.phase++;
+        
+              if (breath.phase >= pattern.phases.length) {
+                breath.phase = 0;
+                breath.cycle++;
+              }
+        
+              runCycle();
+              return;
+            }
+        
+            t--;
+            breath.timer = setTimeout(tick, 1000);
+          }
+        
+          tick();
+        }
 
   /* ===================== EMOTIONS ===================== */
 
