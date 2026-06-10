@@ -241,7 +241,7 @@ async function sendProgress(
 ): Promise<void> {
   const text = progressCard(userId);
   const markup = new InlineKeyboard()
-    .webApp("📱 Подробнее в приложении", `${config.webappUrl}/app/#stats`)
+    .webApp("📱 Подробнее в приложении", `${config.webappUrl}/#stats`)
     .row()
     .text("⭐ Премиум", "buy_premium");
 
@@ -269,7 +269,7 @@ async function sendPremiumInvoice(ctx: Context): Promise<void> {
     [{ label: "Premium 1 месяц", amount: config.premiumPriceStars }],
     {
       provider_token: "",
-      photo_url: `${config.webappUrl}/app/assets/wave.svg`,
+      photo_url: `${config.webappUrl}/assets/wave.svg`,
     }
   );
 }
