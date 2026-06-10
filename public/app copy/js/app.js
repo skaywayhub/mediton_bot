@@ -163,6 +163,7 @@
   }
 
   function runCycle() {
+    console.log("RUN CYCLE");
     if (!breath.running || !breath.pattern) return;
 
     const pattern = breath.pattern;
@@ -173,6 +174,15 @@
     }
 
     const phase = pattern.phases[breath.phase];
+    console.log("PHASE =", phase);
+
+    if (!phase) {
+      console.error("PHASE NOT FOUND");
+      stopBreathing();
+      return;
+    }
+  
+    
 
     setText("breath-phase", phase.label);
     setText("breath-counter", phase.duration);
