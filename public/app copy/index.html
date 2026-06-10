@@ -13,7 +13,7 @@
       <button id="back-btn" class="back-btn hidden" aria-label="Назад">←</button>
       <div class="header-content">
         <div class="logo">🌊</div>
-        <h1 id="page-title">CalmMind</h1>
+        <h1 id="page-title">Mediton</h1>
         <p id="page-subtitle">Твой помощник при тревоге</p>
       </div>
     </header>
@@ -96,21 +96,32 @@
 
       <!-- Breathing exercise -->
       <section id="view-breathe-active" class="view">
+
         <div class="breathing-container">
+      
           <div class="breathing-ring outer"></div>
           <div class="breathing-ring middle"></div>
+      
           <div class="breathing-circle" id="breathing-circle">
             <span id="breath-phase">Готов?</span>
             <span id="breath-counter" class="breath-counter"></span>
           </div>
+      
         </div>
-        <p class="breath-instruction" id="breath-instruction">Нажми «Начать» внизу</p>
+      
+        <p class="breath-instruction" id="breath-instruction">
+          Нажми «Начать» внизу
+        </p>
+      
         <div class="breath-controls">
-          <button id="breath-sound" class="icon-btn" title="Звук природы">🔊</button>
-          <button id="breath-vibrate" class="icon-btn active" title="Вибрация">📳</button>
+          <button id="breath-sound" class="icon-btn">🔊</button>
+          <button id="breath-vibrate" class="icon-btn active">📳</button>
+      
+          <button id="startBtn" class="primary-btn">Начать</button>
+          <button id="stopBtn" class="secondary-btn">Стоп</button>
         </div>
+      
       </section>
-
       <!-- Grounding -->
       <section id="view-grounding" class="view">
         <div class="grounding-steps" id="grounding-steps">
