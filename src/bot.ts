@@ -279,7 +279,7 @@ export async function setupBotMenu(bot: Bot): Promise<void> {
     menu_button: {
       type: "web_app",
       text: "Приложение CalmMind",
-      web_app: { url: `${config.webappUrl}/app/` },
+      web_app: { url: `${config.webappUrl}` },
     },
   });
 }
