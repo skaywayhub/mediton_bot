@@ -1,6 +1,8 @@
 import { InlineKeyboard, Keyboard } from "grammy";
 import { config } from "./config";
 
+const webappUrl = config.webappUrl;
+
 export function mainReplyKeyboard(): Keyboard {
   return new Keyboard()
     .text("🆘 SOS — Мне тревожно")
@@ -11,32 +13,34 @@ export function mainReplyKeyboard(): Keyboard {
     .resized();
 }
 
-export function welcomeInline(webappUrl: string): InlineKeyboard {
+export function welcomeInline(): InlineKeyboard {
   return new InlineKeyboard()
     .text("🆘 SOS — Мне тревожно сейчас", "sos")
     .row()
-    .webApp("📱 Открыть приложение", `${webappUrl}/app/`)
+    .webApp("📱 Открыть приложение", webappUrl)
     .row()
     .text("✨ Начать", "onboarding_start");
 }
 
-export function sosInline(webappUrl: string): InlineKeyboard {
+export function sosInline(): InlineKeyboard {
   return new InlineKeyboard()
-    .webApp("🌬 Дыхание 4-7-8", `${webappUrl}/app/#breathe-478`)
+    .webApp("🌬 Дыхание", webappUrl)
     .row()
-    .webApp("🌍 Техника заземления", `${webappUrl}/app/#grounding`)
+    .webApp("🌍 Заземление", webappUrl)
     .row()
-    .webApp("📔 Открыть дневник", `${webappUrl}/app/#journal`)
+    .webApp("📔 Дневник", webappUrl)
     .row()
-    .webApp("📱 Подробнее в приложении", `${webappUrl}/app/`);
+    .webApp("📱 Открыть приложение", webappUrl);
 }
 
-export function breatheInline(webappUrl: string): InlineKeyboard {
+export function breatheInline(): InlineKeyboard {
   return new InlineKeyboard()
-    .webApp("4-7-8 (SOS)", `${webappUrl}/app/#breathe-478`)
-    .webApp("Коробочное 4-4-4", `${webappUrl}/app/#breathe-box`)
+    .webApp("🌬 Начать дыхание", webappUrl)
     .row()
-    .webApp("Все упражнения", `${webappUrl}/app/#breathe`);
+    .webApp("4-7-8 техника", webappUrl)
+    .webApp("Коробочное дыхание", webappUrl)
+    .row()
+    .webApp("Все упражнения", webappUrl);
 }
 
 export function moodInline(): InlineKeyboard {
@@ -48,19 +52,19 @@ export function moodInline(): InlineKeyboard {
     .text("😊 5", "mood_5");
 }
 
-export function afterMoodInline(webappUrl: string): InlineKeyboard {
+export function afterMoodInline(): InlineKeyboard {
   return new InlineKeyboard()
-    .webApp("📔 Записать в дневник", `${webappUrl}/app/#journal`)
+    .webApp("📔 Открыть дневник", webappUrl)
     .row()
-    .webApp("🌬 Дыхательное упражнение", `${webappUrl}/app/#breathe`)
+    .webApp("🌬 Дыхание", webappUrl)
     .row()
     .text("📊 Мой прогресс", "progress");
 }
 
-export function miniAppInline(webappUrl: string, hash = ""): InlineKeyboard {
+export function miniAppInline(): InlineKeyboard {
   return new InlineKeyboard().webApp(
-    "📱 Открыть приложение CalmMind",
-    `${webappUrl}/app/${hash}`
+    "📱 Открыть CalmMind",
+    webappUrl
   );
 }
 
