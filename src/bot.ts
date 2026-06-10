@@ -161,7 +161,7 @@ export function createBot(): Bot {
         `🎯 *Рекомендация:*\n${recommendation}`,
       {
         parse_mode: "Markdown",
-        reply_markup: afterMoodInline(config.webappUrl),
+        reply_markup:afterMoodInline(),
       }
     );
   });
@@ -197,7 +197,7 @@ export function createBot(): Bot {
         `Спасибо за поддержку 💙`,
       {
         parse_mode: "Markdown",
-        reply_markup: miniAppInline(config.webappUrl, "#premium"),
+        reply_markup: miniAppInline(),
       }
     );
   });
