@@ -1,3 +1,4 @@
+console.log("🔥 APP LOADED");
 (function () {
   "use strict";
 
