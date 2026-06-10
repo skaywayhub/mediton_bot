@@ -74,7 +74,7 @@ export function createBot(): Bot {
         `_Выбери действие или открой приложение:_`,
       {
         parse_mode: "Markdown",
-        reply_markup: welcomeInline(config.webappUrl),
+        reply_markup: welcomeInline(),
       }
     );
 
@@ -93,7 +93,7 @@ export function createBot(): Bot {
         `Выбери технику — откроется интерактивная анимация в приложении:`,
       {
         parse_mode: "Markdown",
-        reply_markup: breatheInline(config.webappUrl),
+        reply_markup: breatheInline(),
       }
     );
   });
@@ -111,7 +111,7 @@ export function createBot(): Bot {
   bot.hears("🆘 SOS — Мне тревожно", async (ctx) => sendSos(ctx));
   bot.hears("🌬 Дыхание", async (ctx) => {
     await ctx.reply("Выбери дыхательную технику:", {
-      reply_markup: breatheInline(config.webappUrl),
+      reply_markup: breatheInline(),
     });
   });
   bot.hears("😊 Настроение", async (ctx) => sendMoodPrompt(ctx));
@@ -219,7 +219,7 @@ async function sendSos(ctx: Context): Promise<void> {
       `_Дыши медленно. Ты в безопасности._`,
     {
       parse_mode: "Markdown",
-      reply_markup: sosInline(config.webappUrl),
+      reply_markup: sosInline(),
     }
   );
 }
