@@ -137,21 +137,20 @@ console.log("🔥 APP LOADED");
   }
 
   function startBreathing() {
-    console.log("START CLICKED");
-    console.log("CURRENT PATTERN:", breath.pattern);
+    alert("START CLICKED");
   
     if (!breath.pattern) {
-      console.warn("NO PATTERN → STOP");
+      alert("NO PATTERN");
       return;
     }
+  
+    alert("PATTERN OK");
   
     breath.running = true;
     breath.cycle = 0;
     breath.phase = 0;
   
     breathSession.startedAt = Date.now();
-  
-    console.log("RUN CYCLE NOW");
   
     runCycle();
   }
