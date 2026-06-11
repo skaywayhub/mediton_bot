@@ -1,3 +1,5 @@
+alert("APP VERSION TEST 123");
+
 console.log("🔥 APP LOADED");
 
 (function () {
