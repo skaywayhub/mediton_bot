@@ -12,7 +12,7 @@ export async function createServer() {
   app.use(express.static(path.join(process.cwd(), "public")));
 
   app.get("/health", (_req, res) => {
-    res.json({ status: "ok", service: "calmmind" });
+    res.json({ status: "ok", service:"Mediton" });
   });
 
   app.use("/api", apiRouter);
@@ -52,7 +52,7 @@ export async function startServer() {
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on ${PORT}`);
-  console.log(`CalmMind running`);
+  console.log(`Mediton running`);
   console.log(`Mini App: ${config.webappUrl}`);
 });
 }
