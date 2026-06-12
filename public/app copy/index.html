@@ -63,21 +63,21 @@
       <!-- Breathing list -->
       <section id="view-breathe" class="view">
         <div class="technique-list">
-          <button class="technique-card" data-breathe="478">
+          <button class="technique-card" data-breathe="478" id="pattern-478">
             <div class="technique-info">
               <h3>4-7-8 (SOS)</h3>
               <p>Вдох 4 · Задержка 7 · Выдох 8</p>
             </div>
             <span class="badge free">Бесплатно</span>
           </button>
-          <button class="technique-card" data-breathe="box">
+          <button class="technique-card" data-breathe="box" id="pattern-box">
             <div class="technique-info">
               <h3>Коробочное дыхание</h3>
               <p>4-4-4-4 · Баланс и фокус</p>
             </div>
             <span class="badge free">Бесплатно</span>
           </button>
-          <button class="technique-card" data-breathe="calm">
+          <button class="technique-card" data-breathe="calm" id="pattern-calm">
             <div class="technique-info">
               <h3>Спокойное дыхание</h3>
               <p>5-5 · Мягкое успокоение</p>
@@ -96,7 +96,6 @@
 
       <!-- Breathing exercise -->
       <section id="view-breathe-active" class="view">
-
         <div class="breathing-container">
           <div class="breathing-ring outer"></div>
           <div class="breathing-ring middle"></div>
@@ -111,7 +110,6 @@
           Нажми «Начать» внизу
         </p>
       
-        <!-- 👇 ЭМОЦИИ СЮДА (после текста, перед кнопками) -->
         <div id="emotion-bar" class="emotion-bar">
           <button data-emotion="panic">😰</button>
           <button data-emotion="anxious">😟</button>
@@ -123,10 +121,9 @@
           <button id="breath-sound" class="icon-btn">🔊</button>
           <button id="breath-vibrate" class="icon-btn active">📳</button>
       
-          <button id="startBtn" class="primary-btn">Начать</button>
+          <button id="start-btn" class="primary-btn">Начать</button>
           <button id="stopBtn" class="secondary-btn">Стоп</button>
         </div>
-      
       </section>
     
       <!-- Grounding -->
