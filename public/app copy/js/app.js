@@ -3,7 +3,8 @@ alert("APP VERSION TEST 123");
 console.log("🔥 APP LOADED");
 
 (function () {
-"use strict";
+alert("APP VERSION 1.0 — ФАЙЛ ОБНОВЛЁН");
+  "use strict";
 
 const tg = window.Telegram?.WebApp;
 
